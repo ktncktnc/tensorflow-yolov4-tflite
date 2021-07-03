@@ -24,7 +24,15 @@ output_folder = 'static/result/'
 flask_output_folder = 'result/'
 print('Model loaded. Check http://127.0.0.1:5000/')
 
-coco_weight = 
+weight = {
+    "coco": './trained/yolov4-tiny-416',
+    "udacity": './trained/yolov4-tiny-vehicles'
+}
+
+img_size = {
+    "coco": 418,
+    "udacity": 512
+}
 
 detector = ObjectDetector(image_size = 416, output = output_folder)
 
@@ -42,11 +50,10 @@ def upload_file():
     if uploaded_file.filename != '':
         uploaded_file.save(os.path.join(upload_folder, uploaded_file.filename))
 
-        detector.load_weight()
+        detector.load_weight(weight[datatype], datatype == 'coco', img_size[datatype])
         text_result =  detector.detect(image_path = os.path.join(upload_folder, uploaded_file.filename))
 
         print('detect done!')
-        #cv2.imshow('result',detected)
         return render_template("index.html", result_img = os.path.join(output_folder, uploaded_file.filename), text= text_result)
     return render_template("index.html")  
 
