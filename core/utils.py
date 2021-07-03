@@ -162,6 +162,25 @@ def draw_bbox(image, bboxes, classes=read_class_names(cfg.YOLO.CLASSES), show_la
                         fontScale, (0, 0, 0), bbox_thick // 2, lineType=cv2.LINE_AA)
     return image
 
+def bboxes_to_text(bboxes, image_shape, classes=read_class_names(cfg.YOLO.CLASSES)):
+    num_classes = len(classes)
+    image_h, image_w, _ = image_shape
+    result_text = ""
+    out_boxes, out_scores, out_classes, num_boxes = bboxes
+    for i in range(num_boxes[0]):
+        if int(out_classes[0][i]) < 0 or int(out_classes[0][i]) > num_classes: continue
+        coor = out_boxes[0][i]
+        coor[0] = int(coor[0])
+        coor[2] = int(coor[2])
+        coor[1] = int(coor[1])
+        coor[3] = int(coor[3])
+
+        score = out_scores[0][i]
+        class_ind = int(out_classes[0][i])
+        text = "<p><b>Class:</b> " + classes[class_ind] + " <b>bbox:</b> (" + str(coor[0]) + ", " + str(coor[1]) + "), (" + str(coor[2]) +", " + str(coor[3]) + ") <b>score</b> = " + str(score)
+        result_text  = result_text + text
+    return result_text 
+
 def bbox_iou(bboxes1, bboxes2):
     """
     @param bboxes1: (a, b, ..., 4)

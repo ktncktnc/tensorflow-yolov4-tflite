@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Image Upload with preview</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
+<link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="container">
+    <h1>Object Detection 
+        <small>Yolov4 Tiny</small>
+    </h1>
+    <form class = 'uploadform' id = 'uploadform' action="./predict" method = 'POST' enctype="multipart/form-data">
+      <div>
+        <label for="img">Chọn ảnh:</label>
+        <input type="file" id="img" name="file" accept="image/*">
+      </div>
+
+      <div>
+        <label for="dataset">Tập dữ liệu: </label>
+        <select name="dataset" id="dataset" form="uploadform">
+          <option value="coco">Coco</op tion>
+          <option value="udacity">Udacity</option>
+        </select>
+        
+      </div>
+      <input type="submit">
+      </form>
+</div>
+<div class="text_result">
+  <p class = "result_title">Result</p>
+  {{ text | safe}}
+</div>
+<div class = "result">
+    <img src="{{ result_img }}" alt="">
+</div>
+<!-- partial -->
+
+</body>
+</html>

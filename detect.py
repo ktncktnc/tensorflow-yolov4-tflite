@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import tensorflow as tf
 physical_devices = tf.config.experimental.list_physical_devices('GPU')
 if len(physical_devices) > 0:
