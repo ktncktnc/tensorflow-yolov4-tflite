@@ -1,2 +1,5 @@
 ./static/result/*
 ./files/*
+
+!files/.gitkeep
+!static/result/.gitkeep
