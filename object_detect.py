@@ -4,10 +4,10 @@ if len(physical_devices) > 0:
     tf.config.experimental.set_memory_growth(physical_devices[0], True)
 
 import core.utils as utils
-from core.yolov4 import filter_boxes
 from tensorflow.python.saved_model import tag_constants
 from PIL import Image
 import cv2
+from core.config import cfg
 import numpy as np
 import os
 from tensorflow.compat.v1 import ConfigProto
@@ -15,10 +15,10 @@ from tensorflow.compat.v1 import InteractiveSession
 
 
 class ObjectDetector:
-    def __init__(self, image_size, output):
+    def __init__(self, output):
         self.model_load = None
         self.type = 'Coco'
-        self.image_size = image_size
+        self.image_size = 418
         self.iou = 0.45
         self.score = 0.25
         self.output = output
@@ -65,16 +65,21 @@ class ObjectDetector:
         )
         pred_bbox = [boxes.numpy(), scores.numpy(), classes.numpy(), valid_detections.numpy()]
 
-        cropped_image = utils.draw_bbox(original_image, pred_bbox)
+        if self.type == True:
+            cropped_image = utils.draw_bbox(original_image, pred_bbox)
+        else:
+            cropped_image = utils.draw_bbox(image = original_image, bboxes = pred_bbox, classes = utils.read_class_names(cfg.UDACITY.CLASSES))    
 
         image = Image.fromarray(cropped_image.astype(np.uint8))
-        #if not FLAGS.dont_show:
-            #image.show()
         image = cv2.cvtColor(np.array(image), cv2.COLOR_BGR2RGB)
 
         _ , img_name = os.path.split(image_path)
 
         cv2.imwrite(self.output +  img_name, image)
 
-        result_text = utils.bboxes_to_text(pred_bbox, image.shape)
+        if self.type == True:
+            result_text = utils.bboxes_to_text(pred_bbox, image.shape)
+        else:
+            result_text = utils.bboxes_to_text(bboxes = pred_bbox, image_shape = image.shape, classes = utils.read_class_names(cfg.UDACITY.CLASSES))    
+
         return result_text

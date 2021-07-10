@@ -22,6 +22,11 @@ __C.YOLO.XYSCALE_TINY         = [1.05, 1.05]
 __C.YOLO.ANCHOR_PER_SCALE     = 3
 __C.YOLO.IOU_LOSS_THRESH      = 0.5
 
+#Udacity options
+
+__C.UDACITY                   = edict()
+__C.UDACITY.CLASSES           = "./data/classes/vehicles.names"  
+
 
 # Train options
 __C.TRAIN                     = edict()

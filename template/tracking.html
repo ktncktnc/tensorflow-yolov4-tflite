@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Tracking - YOLOv4 Application</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="container">
+    <h1>Multi Object Tracking 
+        <small>Tracking - YOLOv4 Application</small>
+    </h1>
+    <form class = 'uploadform' id = 'uploadform' action="./tracking" method = 'POST' enctype="multipart/form-data">
+      <div>
+        <label for="img">Chọn video:</label>
+        <input type="file" id="img" name="file" accept="video/*">
+      </div>
+
+      <div>
+        <label for="dataset">Tập dữ liệu: </label>
+        <select name="dataset" id="dataset" form="uploadform">
+          <option value="coco">coco</op tion>
+          <option value="udacity">udacity</option>
+        </select>
+        
+      </div>
+      <input type="submit">
+      </form>
+</div>
+<div class="text_result">
+  <p class = "result_title">Result</p>
+  {{ text | safe}}
+</div>
+
+<video height="400" controls style="margin: 0 auto; display: block;">
+  <source src="{{ result_video }}" type="video/mp4"></source>
+  Your browser does not support HTML video.
+</video>
+
+<div class="link">
+  <a href="/" class='backlink'>Back to main</a>
+</div>
+
+
+</body>
+</html>

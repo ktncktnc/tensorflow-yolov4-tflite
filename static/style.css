@@ -115,3 +115,15 @@ h1 small {
 #uploadfrom > div > label{
   margin-right: 30px;
 }
+
+.backlink{
+  padding:1em;
+  text-align: center;
+  display:inline-block;
+  text-decoration: none !important;
+  margin:0 auto;
+}
+
+.link{
+  text-align: center;
+}
